@@ -1,0 +1,31 @@
+name: Deploy to IIS
+
+on:
+  push:
+    branches:
+      - main  # or specify your main branch
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0'  # adjust to your project's version
+
+    - name: Build and publish
+      run: dotnet publish -c Release -o ./publish
+
+    - name: Deploy to IIS
+      uses: DevMentors/msdeploy@v0.3.1
+      with:
+        package: ./publish
+        websiteName: 'AutoDeployment'  # specify your IIS website name
+        serverUrl: 'https://theroyalblue.pk:5010'  # specify your server URL
+        username: ${{ Administrator }}  # add your IIS username to GitHub Secrets
+        password: ${{ secrets.IIS_PASSWORD }}  # add your IIS password to GitHub Secrets
