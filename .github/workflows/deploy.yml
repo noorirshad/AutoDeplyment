@@ -26,7 +26,7 @@ jobs:
       with:
         package: ./publish
         websiteName: 'AutoDeployment'  # specify your IIS website name
-        protocol: 'https'  # or 'https' depending on your server configuration
+        protocol: 'https'  # or 'http' depending on your server configuration
         serverUrl: 'https://theroyalblue.pk:5010'  # specify your server URL
         username: ${{ secrets.IIS_USERNAME }} # add your IIS username to GitHub Secrets
         password: ${{ secrets.IIS_PASSWORD }}  # add your IIS password to GitHub Secrets
