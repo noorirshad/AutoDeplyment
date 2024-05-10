@@ -27,5 +27,5 @@ jobs:
         package: ./publish
         websiteName: 'AutoDeployment'  # specify your IIS website name
         serverUrl: 'https://theroyalblue.pk:5010'  # specify your server URL
-        username: ${{ Administrator }}  # add your IIS username to GitHub Secrets
+        username: ${{ secrets.IIS_USERNAME }} # add your IIS username to GitHub Secrets
         password: ${{ secrets.IIS_PASSWORD }}  # add your IIS password to GitHub Secrets
