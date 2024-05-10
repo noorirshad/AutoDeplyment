@@ -3,30 +3,35 @@ name: Deploy to IIS
 on:
   push:
     branches:
-      - master  # or specify your main branch
+      - master  # Adjust branch as needed
 
 jobs:
   build:
     runs-on: windows-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
-    - name: Setup .NET Core
+    - name: Setup .NET SDK
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '6.0.x'  # adjust to your project's version
+        dotnet-version: '6.0'  # Adjust to match your project's SDK version
 
-    - name: Build and publish
+    - name: Restore dependencies and build
+      run: |
+        dotnet restore
+        dotnet build --configuration Release
+
+    - name: Publish
       run: dotnet publish -c Release -o ./publish
 
     - name: Deploy to IIS
-      uses: jexus/webpi@v1
+      uses: DevLabs-UG/.Net-IIS-Deploy@v1
       with:
-        package: ./publish
-        websiteName: 'OnlineBuySellStore_UI'  # specify your IIS website name
-        protocol: 'https'  # or 'http' depending on your server configuration
-        serverUrl: 'https://theroyalblue.pk'  # specify your server URL
-        username: ${{ secrets.IIS_USERNAME }} # add your IIS username to GitHub Secrets
-        password: ${{ secrets.IIS_PASSWORD }}  # add your IIS password to GitHub Secrets
+        WebsiteName: 'OnlineBuySellStore_UI'  # Name of your website in IIS
+        PublishPath: './publish'  # Path to the published files
+        IISPath: 'IIS:\Sites\OnlineBuySellStore_UI'  # IIS path to your website
+        Server: '43.205.229.212'  # IP or hostname of your IIS server
+        Username: ${{ secrets.IIS_USERNAME }}  # Credentials for accessing IIS
+        Password: ${{ secrets.IIS_PASSWORD }}  # Store these in GitHub Secrets
+
