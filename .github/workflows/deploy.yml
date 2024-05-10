@@ -3,7 +3,7 @@ name: Deploy to IIS
 on:
   push:
     branches:
-      - master  # Adjust branch as needed
+      - master # Adjust branch as needed
 
 jobs:
   build:
@@ -26,12 +26,8 @@ jobs:
       run: dotnet publish -c Release -o ./publish
 
     - name: Deploy to IIS
-      uses: DevLabs-UG/.Net-IIS-Deploy@v1
-      with:
-        WebsiteName: 'OnlineBuySellStore_UI'  # Name of your website in IIS
-        PublishPath: './publish'  # Path to the published files
-        IISPath: 'IIS:\Sites\OnlineBuySellStore_UI'  # IIS path to your website
-        Server: '43.205.229.212'  # IP or hostname of your IIS server
-        Username: ${{ secrets.IIS_USERNAME }}  # Credentials for accessing IIS
-        Password: ${{ secrets.IIS_PASSWORD }}  # Store these in GitHub Secrets
+      run: |
+        $targetDir = '\\43.205.229.212\C:\inetpub\wwwroot\OnlineBuySellStore_UI'
+        Copy-Item -Path ./publish/* -Destination $targetDir -Recurse
+    
 
