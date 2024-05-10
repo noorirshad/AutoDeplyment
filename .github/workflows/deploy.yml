@@ -28,6 +28,7 @@ jobs:
     - name: Deploy to IIS
       run: |
         $targetDir = '\\43.205.229.212\C:\inetpub\wwwroot\OnlineBuySellStore_UI'
-        Copy-Item -Path ./publish/* -Destination $targetDir -Recurse
+         Write-Output "Copying files to $targetDir"
+         Copy-Item -Path ./publish/* -Destination $targetDir -Recurse -Force
     
 
