@@ -25,7 +25,7 @@ jobs:
       uses: jexus/webpi@v1
       with:
         package: ./publish
-        websiteName: 'AutoDeployment'  # specify your IIS website name
+        websiteName: 'OnlineBuySellStore_UI'  # specify your IIS website name
         protocol: 'https'  # or 'http' depending on your server configuration
         serverUrl: 'https://theroyalblue.pk:5010'  # specify your server URL
         username: ${{ secrets.IIS_USERNAME }} # add your IIS username to GitHub Secrets
