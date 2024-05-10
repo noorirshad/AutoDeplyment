@@ -15,7 +15,7 @@ jobs:
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '6.0'  # Adjust to match your project's SDK version
+        dotnet-version: '6.0.0'  # Adjust to match your project's SDK version
 
     - name: Restore dependencies and build
       run: |
